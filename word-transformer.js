@@ -1,42 +1,49 @@
+"use strict";
+// Funktioner för ordtransformering
 const reverseWord = (word) => word.split('').reverse().join('');
-
 const capitalizeWord = (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-
 const repeatWord = (word, times) => word.repeat(times);
-
-// catered for swedish - feel free to change 😊
+// Catered for Swedish vowels
 const countVowels = (word) => (word.match(/[aeiouyåäö]/gi) || []).length;
-
 const transformWord = (operation, word, param) => {
-  switch (operation) {
-    case 'reverse':
-      return reverseWord(word);
-    case 'capitalize':
-      return capitalizeWord(word);
-    case 'repeat':
-      return repeatWord(word, param);
-    case 'countVowels':
-      return countVowels(word);
-    default:
-      return "Invalid operation";
-  }
+    switch (operation) {
+        case 'reverse':
+            return reverseWord(word);
+        case 'capitalize':
+            return capitalizeWord(word);
+        case 'repeat':
+            return repeatWord(word, param || 1);
+        case 'countVowels':
+            return countVowels(word);
+        default:
+            return "Invalid operation";
+    }
 };
-
+// Kör transformeringen och uppdatera resultat
 const runTransformation = () => {
-  const word = document.getElementById('word').value;
-  const operation = document.getElementById('operation').value;
-  const param = parseInt(document.getElementById('param').value);
-  const result = transformWord(operation, word, param);
-  const resultContainer = document.getElementById('result');
-  resultContainer.textContent = `Result: ${result}`;
-  resultContainer.classList.toggle('active', result !== '');
+    const wordInput = document.getElementById('word');
+    const operationSelect = document.getElementById('operation');
+    const paramInput = document.getElementById('param');
+    const resultContainer = document.getElementById('result');
+    const word = (wordInput === null || wordInput === void 0 ? void 0 : wordInput.value) || '';
+    const operation = (operationSelect === null || operationSelect === void 0 ? void 0 : operationSelect.value) || '';
+    const param = parseInt((paramInput === null || paramInput === void 0 ? void 0 : paramInput.value) || '0');
+    const result = transformWord(operation, word, param);
+    if (resultContainer) {
+        resultContainer.textContent = `Result: ${result}`;
+        resultContainer.classList.toggle('active', result !== '');
+    }
 };
-
-// Show/hide param input based on selected operation
-document.getElementById('operation').addEventListener('change', function () {
-  const paramContainer = document.getElementById('paramContainer');
-  paramContainer.classList.toggle('active', this.value === 'repeat');
+// Visa/dölj param-input beroende på operation
+const operationElement = document.getElementById('operation');
+const paramContainer = document.getElementById('paramContainer');
+operationElement === null || operationElement === void 0 ? void 0 : operationElement.addEventListener('change', function () {
+    if (paramContainer) {
+        const select = this;
+        paramContainer.classList.toggle('active', select.value === 'repeat');
+    }
 });
-
-// Event listener for transform button
-document.getElementById('transformButton').addEventListener('click', runTransformation)
+// Event listener för transform-knappen
+const transformButton = document.getElementById('transformButton');
+transformButton === null || transformButton === void 0 ? void 0 : transformButton.addEventListener('click', runTransformation);
+//# sourceMappingURL=word-transformer.js.map
