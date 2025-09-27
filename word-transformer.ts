@@ -61,4 +61,4 @@ operationElement?.addEventListener('change', function () {
 
 /* transform-knappen'/*
 const transformButton = document.getElementById('transformButton');
-transformButton?.addEventListener('click', runTransformation);
+transformButton?.addEventListener('click', runTransformation);*/
